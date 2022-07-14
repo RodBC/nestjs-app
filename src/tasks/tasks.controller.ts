@@ -12,26 +12,34 @@ import { TasksService } from './tasks.service';
 import { TaskStatus } from './task-status.enum';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/getTaskFIlter.dto';
-import { Task } from './task.entity';
+import { Task } from './entities/task.entity';
 @Controller('tasks')
 export class TasksController {
   constructor(private taskService: TasksService) {}
 
+  
+  @Get()
+  getAllTasks(): Promise<Task[]> {
+    return this.taskService.getAllTaks();
+  }
+
+  @Get(':id')
+  getTaskById(@Param('id') id: string): Promise<Task> {
+    return this.taskService.getTaskById(id);
+  }
+
+
+  
   // @Get()
   // getAllTasks(@Query() filterDto: GetTasksFilterDto): Task[] {
   //   // if (filters) {call this.tasksService.getTasksFilterDto}
   //   // otherwise, just return all tasks
   //   if (Object.keys(filterDto).length) {
   //     return this.taskService.getTasksFiltered(filterDto);
-  //   } 
+  //   }
   //   else {
   //     return this.taskService.getAllTaks();
   //   }
-  // }
-
-  // @Get('/:id')
-  // getTaskById(@Param('id') id: string): Task {
-  //   return this.taskService.getTaskById(id);
   // }
 
   // @Delete('/:id')
@@ -47,8 +55,8 @@ export class TasksController {
   //   return this.taskService.updateTaskStatus(id, status);
   // }
 
-  @Post()
-  createTask(@Body() CreateTaskDto: CreateTaskDto): Promise<Task> {
-    return this.taskService.createTask(CreateTaskDto);
-  }
+  // @Post()
+  // createTask(@Body() CreateTaskDto: CreateTaskDto): Promise<Task> {
+  //   return this.taskService.createTask(CreateTaskDto);
+  // }
 }

@@ -2,15 +2,28 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { TaskStatus } from './task-status.enum';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/getTaskFIlter.dto';
-import { TaskRepository } from './task.repository';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Task } from './task.entity';
+import { Task } from './entities/task.entity';
+import { AppDataSource } from '../data-source';
+
 @Injectable()
 export class TasksService {
 
-  // getAllTaks(): Task[]{
-  //     return this.tasks;
-  // };
+  // async createTask(): Promise<Task> {
+  //   const task = await AppDataSource.getRepository(Task)
+  //     .createQueryBuilder('taks')
+  //     .getMany();
+
+  //   return task;
+  // }
+
+  async getAllTaks(): Promise<Task[]> {
+    const task = await AppDataSource.getRepository(Task)
+      .createQueryBuilder('tasks')
+      .getMany();
+
+    return task;
+  }
 
   // getTasksFiltered(filterDto: GetTasksFilterDto): Task[]{
   //     const { status, search } = filterDto;
@@ -30,28 +43,30 @@ export class TasksService {
   //     return tasks;
   // }
 
-  async getTaskById(id:any): Promise<Task> {
-    const found = await this.taskRepository.findOne(id)
-  
-    if (!found){
-        throw new NotFoundException(`Task with id "${id}" not found`)
+  async getTaskById(id: any): Promise<Task> {
+    const task = await AppDataSource.getRepository(Task)
+      .createQueryBuilder('t')
+      .where('t.id = :id', { id })
+      .getOne();
+
+    if (!task) {
+      throw new NotFoundException(`Task with id "${id}" not found`);
     }
-    return found;
-}
+    return task;
+  }
 
+  // async createTask(createTaskDto: CreateTaskDto): Promise<Task>{
+  //     const { description, title } = createTaskDto;
 
-    async createTask(createTaskDto: CreateTaskDto): Promise<Task>{
-        const { description, title } = createTaskDto;
+  //     const task = this.taskRepository.create({
+  //         description,
+  //         title,
+  //         status: TaskStatus.OPEN,
+  //     });
 
-        const task = this.taskRepository.create({
-            description,
-            title,
-            status: TaskStatus.OPEN,
-        });
-
-        await this.taskRepository.save(task);
-        return task;
-    }
+  //     await this.taskRepository.save(task);
+  //     return task;
+  // }
   // createTask(CreateTaskDto: CreateTaskDto): Task {
   //     const {title, description} = CreateTaskDto;
 
