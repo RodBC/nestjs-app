@@ -20,6 +20,7 @@ export class TasksService {
   async getAllTaks(): Promise<Task[]> {
     const task = await AppDataSource.getRepository(Task)
       .createQueryBuilder('tasks')
+      .select('tasks')
       .getMany();
 
     return task;
