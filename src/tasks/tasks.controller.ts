@@ -13,16 +13,24 @@ import { TaskStatus } from './task-status.enum';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/getTaskFIlter.dto';
 import { Task } from './entities/task.entity';
+import { ApiResponse } from '@nestjs/swagger';
 @Controller('tasks')
 export class TasksController {
   constructor(private taskService: TasksService) {}
 
+  @ApiResponse({
+    status:201,
+    description:'create task'
+  })
   @Post()
   async create(@Body() CreateTaskDto: CreateTaskDto) {
     return this.taskService.create(CreateTaskDto);
   }
 
-  
+  @ApiResponse({
+    status:200,
+    description:'find all tasks'
+  })  
   @Get()
   async findAll() {
     return this.taskService.findAll();
