@@ -17,16 +17,21 @@ import { Task } from './entities/task.entity';
 export class TasksController {
   constructor(private taskService: TasksService) {}
 
-  
-  @Get()
-  getAllTasks(): Promise<Task[]> {
-    return this.taskService.getAllTaks();
+  @Post()
+  async create(@Body() CreateTaskDto: CreateTaskDto) {
+    return this.taskService.create(CreateTaskDto);
   }
 
-  @Get(':id')
-  getTaskById(@Param('id') id: string): Promise<Task> {
-    return this.taskService.getTaskById(id);
+  
+  @Get()
+  async findAll() {
+    return this.taskService.findAll();
   }
+
+  // @Get(':id')
+  // getTaskById(@Param('id') id: string): Promise<Task> {
+  //   return this.taskService.getTaskById(id);
+  // }
 
 
   
@@ -55,8 +60,4 @@ export class TasksController {
   //   return this.taskService.updateTaskStatus(id, status);
   // }
 
-  // @Post()
-  // createTask(@Body() CreateTaskDto: CreateTaskDto): Promise<Task> {
-  //   return this.taskService.createTask(CreateTaskDto);
-  // }
 }
