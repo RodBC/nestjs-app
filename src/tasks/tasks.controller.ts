@@ -14,7 +14,7 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { GetTasksFilterDto } from './dto/getTaskFIlter.dto';
 import { Task } from './entities/task.entity';
 import { ApiResponse } from '@nestjs/swagger';
-@Controller('tasks')
+@Controller('task')
 export class TasksController {
   constructor(private taskService: TasksService) {}
 
@@ -23,8 +23,8 @@ export class TasksController {
     description:'create task'
   })
   @Post()
-  async create(@Body() CreateTaskDto: CreateTaskDto) {
-    return this.taskService.create(CreateTaskDto);
+  async create(@Body() createTaskDto: CreateTaskDto) {
+    return this.taskService.create(createTaskDto);
   }
 
   @ApiResponse({

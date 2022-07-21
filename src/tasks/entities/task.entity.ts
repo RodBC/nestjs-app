@@ -5,11 +5,11 @@ import {
  } from "typeorm";
 import { TaskStatus } from "../task-status.enum";
 import {ApiProperty, ApiTags} from '@nestjs/swagger'
-@ApiTags('Tasks')
-@Entity( {name: 'tasks'} )
+@ApiTags('Task')
+@Entity( {name: 'task'} )
 export class Task{
     @ApiProperty({name:'id', type:Number})
-    @PrimaryGeneratedColumn('uuid')
+    @PrimaryGeneratedColumn('increment', { name: 'id' })
     id: string;
 
     @Column()
@@ -17,7 +17,8 @@ export class Task{
 
     @Column()
     description: string;
-
+    
+    @ApiProperty({name:'status', type:String, nullable:true})
     @Column()
-    status: TaskStatus;
+    status?: TaskStatus;
 }

@@ -10,12 +10,12 @@ import { AppDataSource } from '../data-source';
 export class TasksService {
 
   async create(createTask: CreateTaskDto) {
-
+    const {description, title, status} = createTask;
     try {
       return await AppDataSource.createQueryBuilder()
         .insert()
         .into(Task)
-        .values(createTask)
+        .values({description, title, status})
         .execute();
     } catch (err) {
       console.log(err);
