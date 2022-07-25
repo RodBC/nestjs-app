@@ -24,18 +24,32 @@ export class TasksService {
 
 }
 
-async findAll() {
-  
-  try {
-    return await AppDataSource.createQueryBuilder()
-      .select('o')
-      .from(Task, 'o')
-      .getMany();
-  } catch (err) {
-    console.log(err);
-    return HttpStatus.INTERNAL_SERVER_ERROR;
+  async findAll() {
+    
+    try {
+      return await AppDataSource.createQueryBuilder()
+        .select('o')
+        .from(Task, 'o')
+        .getMany();
+    } catch (err) {
+      console.log(err);
+      return HttpStatus.INTERNAL_SERVER_ERROR;
+    }
   }
-}
+
+  async remove(id: number) {
+    try{
+      return await AppDataSource.createQueryBuilder()
+      .delete()
+      .from(Task)
+      .where('id=:taskID', {taskID : id})
+      .execute()
+    } catch(err) {
+      console.log(err)
+      return HttpStatus.INTERNAL_SERVER_ERROR;
+    }
+  }
+
 
   // getTasksFiltered(filterDto: GetTasksFilterDto): Task[]{
   //     const { status, search } = filterDto;
@@ -87,7 +101,4 @@ async findAll() {
   //     return task;
   // }
 
-  // deleteTask(id: string): void {
-  //     this.tasks = this.tasks.filter((task) => task.id !== id)
-  // }
 }

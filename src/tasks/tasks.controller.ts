@@ -36,6 +36,13 @@ export class TasksController {
     return this.taskService.findAll();
   }
 
+
+  @Delete(':id')
+  async remove(@Param('id') id:string) {
+    return this.taskService.remove(+id);
+  }
+  
+
   // @Get(':id')
   // getTaskById(@Param('id') id: string): Promise<Task> {
   //   return this.taskService.getTaskById(id);
@@ -55,10 +62,6 @@ export class TasksController {
   //   }
   // }
 
-  // @Delete('/:id')
-  // deleteTask(@Param('id') id: string): void {
-  //   return this.taskService.deleteTask(id);
-  // }
 
   // @Patch('/:id/status')
   // updateTaskStatus(
