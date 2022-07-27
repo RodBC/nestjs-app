@@ -6,6 +6,7 @@ import {
 import { TaskStatus } from "../task-status.enum";
 import {ApiProperty, ApiTags} from '@nestjs/swagger'
 @ApiTags('Task')
+
 @Entity( {name: 'task'} )
 export class Task{
     @ApiProperty({name:'id', type:Number})
