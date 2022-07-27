@@ -6,7 +6,7 @@ import { Atuh } from './entities/auth.entity';
 @Injectable()
 export class AuthService{
 
-    async create(authCredentialsDto: AuthCredentialsDto) {
+    async createUser(authCredentialsDto: AuthCredentialsDto) {
         const {username, password} = authCredentialsDto;
         try{
             AppDataSource.createQueryBuilder()

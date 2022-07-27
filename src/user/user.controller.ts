@@ -10,8 +10,8 @@ import { ApiResponse } from '@nestjs/swagger';
 import { AuthService } from './auth.service';
 import { AuthCredentialsDto } from './dto/auth-credentials.dto';
 
-@Controller('auth')
-export class AuthController{
+@Controller('User')
+export class UserController{
     constructor(private authService: AuthService){}
     
     @ApiResponse({
@@ -20,7 +20,7 @@ export class AuthController{
       })
       @Post()
       async create(@Body() authDto: AuthCredentialsDto) {
-        return this.authService.create(authDto);
+        return this.authService.createUser(authDto);
       }
       
       @Get()
